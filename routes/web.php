@@ -18,3 +18,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// 订单管理
+Route::resource('sale_order', 'SaleOrderController');
+
+// 出团计划
+Route::resource('plan', 'PlanController');
+
+// 产品线路
+Route::resource('product', 'ProductController');
+
+// 报表
+Route::resource('report', 'ReportController');
+
+// 系统设置
+Route::resource('system', 'SystemController');
+

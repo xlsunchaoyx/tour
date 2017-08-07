@@ -36,7 +36,15 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
+                        @if (Auth::guest())
                         &nbsp;
+                        @else
+                        <li><a href="/sale_order/">订单管理</a></li>
+                        <li><a href="/plan/">出团计划</a></li>
+                        <li><a href="/product/">产品线路</a></li>
+                        <li><a href="/report/">报表</a></li>
+                        <li><a href="/system/">系统设置</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
