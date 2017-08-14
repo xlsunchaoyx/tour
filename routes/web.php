@@ -20,7 +20,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // 订单管理
+Route::post('/sale_order/{id}', 'SaleOrderController@update')->where('id', '[0-9]+');
+Route::get('/sale_order/{id}/delete', 'SaleOrderController@destroy')->where('id', '[0-9]+');
 Route::resource('sale_order', 'SaleOrderController');
+
 
 // 出团计划
 Route::resource('plan', 'PlanController');

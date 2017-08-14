@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\SaleOrder;
 
 class SaleOrderController extends Controller
 {
@@ -11,9 +12,25 @@ class SaleOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $code = $request->input('code');
+        $user_name = $request->input('user_name');
+
+        $query = SaleOrder::query();
+        if ($code) {
+            $query->where('code', 'like', '%'.$code.'%');
+        }
+        if ($user_name) {
+            $query->where('user_name', 'like', '%'.$user_name.'%');
+        }
+
+        $obj_list = $query->get();
+        return view('saleorder/index', [
+            'obj_list'=>$obj_list,
+            'code'=>$code,
+            'user_name'=>$user_name,
+            ]);
     }
 
     /**
@@ -23,7 +40,7 @@ class SaleOrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('saleorder/create');
     }
 
     /**
@@ -34,7 +51,29 @@ class SaleOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'code' => 'required|max:100',
+            'product_id' => 'required:numeric',
+            'price' => 'required:numeric',
+            'channel' => 'required|max:50',
+            'user_name' => 'required|max:50',
+            'user_phone' => 'required|max:11',
+            'people_number' => 'required|numeric',
+            'trip_date'=>'required:date',
+        ];
+        $attrs = [
+            'code' => '订单编号',
+        ];
+        $this->validate($request, $rules, [], $attrs);
+
+        // TODO验证失败 错误提示
+
+        $obj = new SaleOrder();
+        $obj->fill($request->all());
+        $obj->save();
+
+        return redirect('/sale_order');
+
     }
 
     /**
@@ -56,7 +95,10 @@ class SaleOrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $obj = SaleOrder::find($id);
+        return view('saleorder/edit', [
+            'obj'=>$obj,
+            ]);
     }
 
     /**
@@ -68,7 +110,26 @@ class SaleOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'code' => 'required|max:100',
+            'product_id' => 'required:numeric',
+            'price' => 'required:numeric',
+            'channel' => 'required|max:50',
+            'user_name' => 'required|max:50',
+            'user_phone' => 'required|max:11',
+            'people_number' => 'required|numeric',
+            'trip_date'=>'required:date',
+        ];
+        $attrs = [
+            'code' => '订单编号',
+        ];
+        $this->validate($request, $rules, [], $attrs);
+
+        $obj = SaleOrder::find($id);
+        $obj->fill($request->all());
+        $obj->save();
+        return redirect('/sale_order');
+        
     }
 
     /**
@@ -77,8 +138,10 @@ class SaleOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $obj = SaleOrder::find($id);
+        $obj->delete();
+        return redirect('/sale_order');
     }
 }
