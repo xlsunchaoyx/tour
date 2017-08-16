@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 use App\SaleOrder;
 
 class SaleOrderController extends Controller
@@ -40,7 +41,8 @@ class SaleOrderController extends Controller
      */
     public function create()
     {
-        return view('saleorder/create');
+        $product_list = Product::query()->get();
+        return view('saleorder/create', ['product_list'=>$product_list]);
     }
 
     /**
@@ -96,8 +98,10 @@ class SaleOrderController extends Controller
     public function edit($id)
     {
         $obj = SaleOrder::find($id);
+        $product_list = Product::query()->get();
         return view('saleorder/edit', [
             'obj'=>$obj,
+            'product_list'=>$product_list,
             ]);
     }
 

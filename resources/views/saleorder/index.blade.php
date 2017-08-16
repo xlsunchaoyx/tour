@@ -34,7 +34,7 @@
                 @foreach ($obj_list as $obj)
                     <tr>
                         <th scope="row">{{ $obj->code }}</th>
-                        <td>{{ $obj->product_id }}</td>
+                        <td>{{ $obj->product->name }}</td>
                         <td>{{ $obj->user_name }}</td>
                         <td>{{ $obj->trip_date }}</td>
                         <td>{{ $obj->people_number }}</td>

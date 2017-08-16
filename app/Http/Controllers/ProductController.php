@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\SaleOrder;
 
 
 class ProductController extends Controller
@@ -118,7 +119,14 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $obj = Product::find($id);
-        $obj->delete();
+        // TODO 如果订单已经使用产品 不允许删除
+        $sale_order = SaleOrder::where('proudct', '=', $obj->id)->first();
+        if (!$sale_order) {
+            $obj->delete();
+        } else {
+            // TODO 提示删除失败
+        }
+        
         return redirect('/product');
     }
 }

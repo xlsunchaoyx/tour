@@ -22,7 +22,9 @@
                 <div class="col-sm-10">
                 <select class="form-control" name="product_id">
                     <option value="">请选择</option>
-                    <option value="1">喀纳斯五日游</option>
+                    @foreach ($product_list as $product)
+                      <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @endforeach
                 </select>
                 </div>
               </div>
