@@ -20,7 +20,7 @@ class CreateSaleOrdersTable extends Migration
 
             $table->string('code', 100)->comment('订单编号');
             $table->integer('product_id')->comment('产品ID');
-            $table->decimal('price', 5, 2)->comment('订单价格');
+            $table->decimal('price', 10, 2)->comment('订单价格');
 
             $table->string('channel', 50)->comment('销售渠道');
             $table->string('user_name', 50)->comment('联系人');

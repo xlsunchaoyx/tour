@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->softDeletes();
 
             $table->string('name', 100)->comment('线路名称');
-            $table->decimal('price', 5, 2)->comment('价格');
+            $table->decimal('price', 10, 2)->comment('价格');
             $table->enum('status', ['draft', 'on', 'off'])->default('draft')->comment('状态: 草稿draft，上架on，下架off');
         });
     }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
+
 
 class ProductController extends Controller
 {
@@ -13,7 +15,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $query = Product::query();
+        $obj_list = $query->get();
+        return view('product/index', [
+            'obj_list'=>$obj_list,
+            ]);
     }
 
     /**
@@ -23,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product/create');
     }
 
     /**
@@ -34,7 +40,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|max:100',
+            'price' => 'required:numeric',
+        ];
+        $attrs = [
+            'name' => '线路名称',
+            'price' => '价格',
+        ];
+        $this->validate($request, $rules, [], $attrs);
+
+        // TODO验证失败 错误提示
+
+        $obj = new Product();
+        $obj->fill($request->all());
+        $obj->save();
+
+        return redirect('/product');
     }
 
     /**
@@ -56,7 +78,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $obj = Product::find($id);
+        return view('product/edit', [
+            'obj'=>$obj,
+            ]);
     }
 
     /**
@@ -68,7 +93,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'name' => 'required|max:100',
+            'price' => 'required:numeric',
+        ];
+        $attrs = [
+            'name' => '线路名称',
+            'price' => '价格',
+        ];
+        $this->validate($request, $rules, [], $attrs);
+
+        $obj = Product::find($id);
+        $obj->fill($request->all());
+        $obj->save();
+        return redirect('/product');
     }
 
     /**
@@ -79,6 +117,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $obj = Product::find($id);
+        $obj->delete();
+        return redirect('/product');
     }
 }
