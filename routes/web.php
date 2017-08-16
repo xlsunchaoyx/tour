@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth:web'], function () {
     // 产品线路
     Route::post('/product/{id}', 'ProductController@update')->where('id', '[0-9]+');
     Route::get('/product/{id}/delete', 'ProductController@destroy')->where('id', '[0-9]+');
+    Route::get('/product/{id}/up', 'ProductController@up')->where('id', '[0-9]+');
+    Route::get('/product/{id}/down', 'ProductController@down')->where('id', '[0-9]+');
     Route::resource('product', 'ProductController');
 
     // 报表

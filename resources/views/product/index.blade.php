@@ -12,6 +12,7 @@
                     <tr>
                         <th>线路名称</th>
                         <th>价格</th>
+                        <th>状态</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -20,7 +21,15 @@
                     <tr>
                         <th scope="row">{{ $obj->name }}</th>
                         <td>{{ $obj->price }}</td>
+                        <th>{{ $obj->get_status() }}</th>
                         <td>
+
+                        @if( in_array($obj->status, ['draft', 'off']) )
+                            <a href="/product/{{$obj->id}}/up" class="btn btn-primary btn-sm" role="button">上架</a>
+                        @else
+                            <a href="/product/{{$obj->id}}/down" class="btn btn-primary btn-sm" role="button">下架</a>
+                        @endif
+
                             <a href="/product/{{$obj->id}}/edit" class="btn btn-primary btn-sm" role="button">编辑</a>
                             &nbsp;&nbsp;
                             <a href="/product/{{$obj->id}}/delete" class="btn btn-danger btn-sm" role="button">删除</a>

@@ -129,4 +129,23 @@ class ProductController extends Controller
         
         return redirect('/product');
     }
+
+
+    public function up($id)
+    {
+        $obj = Product::find($id);
+        $obj->status = 'on';
+        $obj->save();
+        
+        return redirect('/product');
+    }
+
+    public function down($id)
+    {
+        $obj = Product::find($id);
+        $obj->status = 'off';
+        $obj->save();
+        
+        return redirect('/product');
+    }
 }

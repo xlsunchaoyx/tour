@@ -41,7 +41,7 @@ class SaleOrderController extends Controller
      */
     public function create()
     {
-        $product_list = Product::query()->get();
+        $product_list = Product::where('status', '=', 'on')->get();
         return view('saleorder/create', ['product_list'=>$product_list]);
     }
 
@@ -98,7 +98,7 @@ class SaleOrderController extends Controller
     public function edit($id)
     {
         $obj = SaleOrder::find($id);
-        $product_list = Product::query()->get();
+        $product_list = Product::where('status', '=', 'on')->get();
         return view('saleorder/edit', [
             'obj'=>$obj,
             'product_list'=>$product_list,
