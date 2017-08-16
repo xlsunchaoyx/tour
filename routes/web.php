@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth:web'], function () {
     // 订单管理
     Route::post('/sale_order/{id}', 'SaleOrderController@update')->where('id', '[0-9]+');
     Route::get('/sale_order/{id}/delete', 'SaleOrderController@destroy')->where('id', '[0-9]+');
+    Route::get('/sale_order/{id}/confirm', 'SaleOrderController@confirm')->where('id', '[0-9]+');
+    Route::get('/sale_order/{id}/cancel', 'SaleOrderController@cancel')->where('id', '[0-9]+');
     Route::resource('sale_order', 'SaleOrderController');
 
 

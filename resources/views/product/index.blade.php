@@ -21,7 +21,7 @@
                     <tr>
                         <th scope="row">{{ $obj->name }}</th>
                         <td>{{ $obj->price }}</td>
-                        <th>{{ $obj->get_status() }}</th>
+                        <td>{{ $obj->get_status() }}</td>
                         <td>
 
                         @if( in_array($obj->status, ['draft', 'off']) )

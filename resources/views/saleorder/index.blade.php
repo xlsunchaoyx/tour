@@ -27,6 +27,7 @@
                         <th>联系人</th>
                         <th>出行日期</th>
                         <th>出行人数</th>
+                        <th>状态</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -38,7 +39,13 @@
                         <td>{{ $obj->user_name }}</td>
                         <td>{{ $obj->trip_date }}</td>
                         <td>{{ $obj->people_number }}</td>
+                        <td>{{ $obj->get_status() }}</td>
                         <td>
+                        @if( in_array($obj->status, ['draft',]) )
+                            <a href="/sale_order/{{$obj->id}}/confirm" class="btn btn-primary btn-sm" role="button">确认</a>
+                            <a href="/sale_order/{{$obj->id}}/cancel" class="btn btn-primary btn-sm" role="button">取消</a>
+                        @endif
+
                             <a href="/sale_order/{{$obj->id}}/edit" class="btn btn-primary btn-sm" role="button">编辑</a>
                             &nbsp;&nbsp;
                             <a href="/sale_order/{{$obj->id}}/delete" class="btn btn-danger btn-sm" role="button">删除</a>

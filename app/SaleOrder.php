@@ -16,4 +16,17 @@ class SaleOrder extends Model
         return $this->hasOne('App\Product', 'id', 'product_id');
     }
 
+    public function get_status()
+    {
+        if ($this->status == 'draft') {
+            return '待确认';
+        } elseif ($this->status == 'confirmed') {
+            return '确认行程';
+        } elseif ($this->status == 'done') {
+            return '完成服务';
+        } else {
+            return '取消';
+        }
+    }
+
 }

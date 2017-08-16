@@ -148,4 +148,21 @@ class SaleOrderController extends Controller
         $obj->delete();
         return redirect('/sale_order');
     }
+
+    public function confirm(Request $request, $id)
+    {
+        $obj = SaleOrder::find($id);
+        $obj->status = 'confirmed';
+        $obj->save();
+        return redirect('/sale_order');
+    }
+
+
+    public function cancel(Request $request, $id)
+    {
+        $obj = SaleOrder::find($id);
+        $obj->status = 'cancel';
+        $obj->save();
+        return redirect('/sale_order');
+    }
 }
