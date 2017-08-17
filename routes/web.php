@@ -29,9 +29,6 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('sale_order', 'SaleOrderController');
 
 
-    // 出团计划
-    Route::resource('plan', 'PlanController');
-
     // 产品线路
     Route::post('/product/{id}', 'ProductController@update')->where('id', '[0-9]+');
     Route::get('/product/{id}/delete', 'ProductController@destroy')->where('id', '[0-9]+');
@@ -43,5 +40,14 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('report', 'ReportController');
 
     // 系统设置
-    Route::resource('system', 'SystemController');
+    Route::get('system', 'SystemController@index');
+    Route::get('/system/{id}/delete', 'SystemController@destroy')->where('id', '[0-9]+');
+
+
+
+    // 出团计划
+    Route::get('/plan/{id}/delete', 'PlanController@destroy')->where('id', '[0-9]+');
+    Route::get('/plan/{id}/confirm', 'PlanController@confirm')->where('id', '[0-9]+');
+
+    Route::resource('plan', 'PlanController');
 });

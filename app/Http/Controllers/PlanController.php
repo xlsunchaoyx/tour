@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Plan;
+use App\SaleOrder;
 
 class PlanController extends Controller
 {
@@ -13,7 +15,11 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        $query = Plan::query();
+        $obj_list = $query->get();
+        return view('plan/index', [
+                'obj_list'=>$obj_list,
+            ]);
     }
 
     /**
@@ -23,7 +29,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        //
+        return view('plan/create', [
+            ]);
     }
 
     /**
@@ -34,7 +41,21 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'trip_date'=>'required:date',
+        ];
+        $attrs = [
+            'trip_date' => '出团日期',
+        ];
+        $this->validate($request, $rules, [], $attrs);
+
+        // TODO验证失败 错误提示
+
+        $obj = new Plan();
+        $obj->fill($request->all());
+        $obj->save();
+
+        return redirect('/plan');
     }
 
     /**
@@ -79,6 +100,20 @@ class PlanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $obj = Plan::find($id);
+        $count = SaleOrder::where('plan_id', '=', $id)->count();
+        if (!$count) {
+            $obj->delete();
+        }
+
+        return redirect('/plan');
+    }
+
+    public function confirm($id)
+    {
+        $obj = Plan::find($id);
+        $obj->status = 'done';
+        $obj->save();
+        return redirect('/plan');
     }
 }

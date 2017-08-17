@@ -20,8 +20,8 @@ class CreatePlansTable extends Migration
 
             $table->date('trip_date')->comment('出团日期');
             $table->enum('status', ['draft', 'done'])->default('draft')->comment('状态: 组团中draft, 已完成done');
-            $table->decimal('income', 5, 2)->comment('团总收入');
-            $table->decimal('expenditure', 5, 2)->comment('团总支出');
+            $table->decimal('income', 5, 2)->comment('团总收入')->nullable();
+            $table->decimal('expenditure', 5, 2)->comment('团总支出')->nullable();
         });
     }
 
