@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/sale_order/{id}/confirm', 'SaleOrderController@confirm')->where('id', '[0-9]+');
     Route::get('/sale_order/{id}/cancel', 'SaleOrderController@cancel')->where('id', '[0-9]+');
     Route::resource('sale_order', 'SaleOrderController');
+    Route::get('/sale_order/{id}/add_to_plan', 'SaleOrderController@load_add_to_plan')->where('id', '[0-9]+');
+    Route::post('/sale_order/{id}/add_to_plan', 'SaleOrderController@add_to_plan')->where('id', '[0-9]+');
 
 
     // 产品线路
@@ -48,6 +50,6 @@ Route::group(['middleware' => 'auth:web'], function () {
     // 出团计划
     Route::get('/plan/{id}/delete', 'PlanController@destroy')->where('id', '[0-9]+');
     Route::get('/plan/{id}/confirm', 'PlanController@confirm')->where('id', '[0-9]+');
-
+    Route::post('/plan/{id}', 'PlanController@update')->where('id', '[0-9]+');
     Route::resource('plan', 'PlanController');
 });

@@ -8,12 +8,21 @@ class Plan extends Model
 {
     protected $fillable = ['trip_date'];
 
+    public function orders()
+    {
+        return $this->hasMany('App\SaleOrder');
+    }
+
     /**
      * 总订单金额
      */
     public function total_price()
     {
-        return 100;
+        $total = 0;
+        foreach ($this->orders as $order) {
+            $total += $order->price;
+        }
+        return $total;
     }
 
     /**
@@ -21,7 +30,11 @@ class Plan extends Model
      */
     public function total_people()
     {
-        return 100;
+        $total = 0;
+        foreach ($this->orders as $order) {
+            $total += $order->people_number;
+        }
+        return $total;
     }
 
     /**
@@ -29,7 +42,7 @@ class Plan extends Model
      */
     public function total_saleorder_count()
     {
-        return 3;
+        return count($this->orders);
     }
 
     public function get_status()

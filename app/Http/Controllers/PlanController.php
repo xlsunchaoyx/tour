@@ -59,17 +59,6 @@ class PlanController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -77,7 +66,15 @@ class PlanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $obj = Plan::find($id);
+        $query = SaleOrder::query();
+        $query->where('plan_id', '=', $id);
+
+        $order_list = $query->get();
+        return view('plan/edit', [
+            'obj'=>$obj,
+            'order_list'=>$order_list,
+            ]);
     }
 
     /**
@@ -89,7 +86,18 @@ class PlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'trip_date'=>'required:date',
+        ];
+        $attrs = [
+            'trip_date' => '出团日期',
+        ];
+        $this->validate($request, $rules, [], $attrs);
+
+        $obj = Plan::find($id);
+        $obj->fill($request->all());
+        $obj->save();
+        return redirect('/plan');
     }
 
     /**
@@ -114,6 +122,13 @@ class PlanController extends Controller
         $obj = Plan::find($id);
         $obj->status = 'done';
         $obj->save();
+
+        foreach ($obj->orders as $order) {
+            $order->status = 'done';
+            $order->save();
+        }
+
+
         return redirect('/plan');
     }
 }

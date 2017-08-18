@@ -27,10 +27,10 @@
                         <td>{{ $obj->total_price() }}</td>
                         <td>{{ $obj->get_status() }}</td>
                         <td>
+                        <a href="/plan/{{$obj->id}}/edit" class="btn btn-primary btn-sm" role="button">操作</a>
+                        &nbsp;&nbsp;
                         @if( in_array($obj->status, ['draft',]) )
-                            <a href="/plan/{{$obj->id}}/confirm" class="btn btn-primary btn-sm" role="button">完成</a>
-                            &nbsp;&nbsp;
-                            <a href="/plan/{{$obj->id}}/edit" class="btn btn-primary btn-sm" role="button">操作</a>
+                            <a href="/plan/{{$obj->id}}/confirm" class="btn btn-primary btn-sm" role="button">回团确认</a>
                             &nbsp;&nbsp;
                             <a href="/plan/{{$obj->id}}/delete" class="btn btn-danger btn-sm" role="button">删除</a>
                         @endif

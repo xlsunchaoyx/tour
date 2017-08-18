@@ -13,16 +13,16 @@ class CreateCostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('costs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->softDeletes();
+        // Schema::create('costs', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->timestamps();
+        //     $table->softDeletes();
 
-            $table->integer('plan_id')->comment('出团计划ID');
-            $table->string('name', 100)->comment('成本项目');
-            $table->decimal('price', 5, 2)->comment('价格');
-            $table->text('remark')->comment('备注')->nullable();
-        });
+        //     $table->integer('plan_id')->comment('出团计划ID');
+        //     $table->string('name', 100)->comment('成本项目');
+        //     $table->decimal('price', 5, 2)->comment('价格');
+        //     $table->text('remark')->comment('备注')->nullable();
+        // });
     }
 
     /**
@@ -32,6 +32,6 @@ class CreateCostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('costs');
+        // Schema::dropIfExists('costs');
     }
 }

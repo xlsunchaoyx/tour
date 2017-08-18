@@ -43,7 +43,11 @@
                         <td>
                         @if( in_array($obj->status, ['draft',]) )
                             <a href="/sale_order/{{$obj->id}}/confirm" class="btn btn-primary btn-sm" role="button">确认</a>
-                            <a href="/sale_order/{{$obj->id}}/cancel" class="btn btn-primary btn-sm" role="button">取消</a>
+                            <a href="/sale_order/{{$obj->id}}/cancel" class="btn btn-default btn-sm" role="button">取消</a>
+                        @elseif( in_array($obj->status, ['confirmed',]) )
+                            @if( !$obj->plan_id )
+                                <a href="/sale_order/{{$obj->id}}/add_to_plan" class="btn btn-primary btn-sm" role="button">添加计划</a>
+                            @endif
                         @endif
 
                             <a href="/sale_order/{{$obj->id}}/edit" class="btn btn-primary btn-sm" role="button">编辑</a>

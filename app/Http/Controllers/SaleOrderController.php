@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\SaleOrder;
+use App\Plan;
 
 class SaleOrderController extends Controller
 {
@@ -164,5 +165,40 @@ class SaleOrderController extends Controller
         $obj->status = 'cancel';
         $obj->save();
         return redirect('/sale_order');
+    }
+
+
+
+    public function load_add_to_plan($id)
+    {
+        $plan_list = Plan::query()->where('status', '=', 'draft')->get();
+        return view('saleorder/add_to_plan', [
+            'id'=>$id,
+            'plan_list'=>$plan_list,
+            ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function add_to_plan(Request $request, $id)
+    {
+        $rules = [
+            'plan_id' => 'required|numeric',
+        ];
+        $attrs = [
+            'plan_id' => '出团计划id',
+        ];
+        $this->validate($request, $rules, [], $attrs);
+
+        $obj = SaleOrder::find($id);
+        $obj->fill($request->all());
+        $obj->save();
+        return redirect('/sale_order');
+        
     }
 }
